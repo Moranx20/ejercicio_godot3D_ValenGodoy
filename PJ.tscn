@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bdy5r873bahvk"]
+
+[ext_resource type="Script" uid="uid://c86vd0ba20wig" path="res://pj.gd" id="1_6ewr6"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_c04i1"]
+height = 1.7611084
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6ewr6"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1984790268]
+script = ExtResource("1_6ewr6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1143205397]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.012111701, 0)
+shape = SubResource("CylinderShape3D_c04i1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=684954987]
+transform = Transform3D(0.97662735, 0, 0, 0, 0.8604233, 0, 0, 0, 1.0633901, 0, 0, 0)
+mesh = SubResource("CylinderMesh_6ewr6")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=278859810]
+transform = Transform3D(1.2095429, 0.056204136, -0.36481392, 0, 1.592634, 0.09584575, 0.47645155, -0.14268252, 0.9261341, -1.115, 1.52, 2.055)
+fov = 89.99999
