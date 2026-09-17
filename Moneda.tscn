@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://h5uqs3ygx8qr"]
+
+[ext_resource type="Script" uid="uid://bql7ea0xhxdlk" path="res://area_3d.gd" id="1_k7ceu"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kmn2i"]
+custom_solver_bias = 0.25
+radius = 1.0084616
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c42cm"]
+albedo_color = Color(0.7980943, 0.79971856, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_3lrwf"]
+material = SubResource("StandardMaterial3D_c42cm")
+radius = 1.0
+height = 1.899
+
+[node name="Area3D" type="Area3D" unique_id=616814996]
+script = ExtResource("1_k7ceu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1348432049]
+shape = SubResource("SphereShape3D_kmn2i")
+debug_color = Color(0.98759633, 0, 0.31632295, 0.41960785)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D" unique_id=15462093]
+mesh = SubResource("SphereMesh_3lrwf")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

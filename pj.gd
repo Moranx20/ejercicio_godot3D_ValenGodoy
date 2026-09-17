@@ -1,28 +1,48 @@
 extends CharacterBody3D
 
+const MAX_JUMP = 2 
 
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+@onready var camara: Camera3D = $Camera3D
+
+var JUMP = 13
+var speed: int = 1000
+var direccion: Vector3
+var sensibilidad: float = 0.01
+var jump_count = 0
 
 
-func _physics_process(delta):
-	# Add the gravity.
+func _ready():
+	add_to_group("player")
+
+func _physics_process(delta: float) -> void:
+	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
-	# Handle jump.
-	if Input.is_action_just_pressed("Up") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector("Left", "Right", "Frontal", "Back")
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
-
+		
+	
+	if Input.is_action_just_pressed("Up") and jump_count < MAX_JUMP:
+		velocity.y = JUMP
+		jump_count +=1
+	
+	run(delta)
+	
+	if is_on_floor():
+		jump_count = 0
+	
 	move_and_slide()
+	print("¿Está en el suelo?: ", is_on_floor())
+
+
+func _input(event):
+	moverCamara(event)
+
+func run(delta):
+	direccion = transform.basis * Vector3(Input.get_axis("Right","Left"), 0, Input.get_axis("Back","Frontal")).normalized()
+	velocity.x = direccion.x * speed * delta
+	velocity.z = direccion.z * speed * delta
+
+
+
+func moverCamara(event):
+	if event is InputEventMouseMotion:
+		rotate_y(-event.relative.x * sensibilidad)
